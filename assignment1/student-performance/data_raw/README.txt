@@ -1,1 +1,8 @@
-
+- gender: male, female
+- race/ethnicity: group A, group B, group C, group D, group E
+- parental level of education: high school, some high school, some college, associate's degree, bachelor's degree, master's degree
+- lunch: free/reduced, standard
+- test preparation course: none, completed
+- math score: Student score in Math, out of 100
+- reading score: Student score in Reading, out of 100
+- writing score: Student score in Writing, out of 100
