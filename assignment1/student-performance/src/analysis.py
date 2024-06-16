@@ -1,5 +1,5 @@
 # load DataFrame
-df = pd.read_csv("/content/StudentsPerformance.csv")
+df = pd.read_csv("../data_raw/students_performance_data.csv")
 
 # 1. Distribution of math scores
 # Analysis: This visualization shows the distribution of math scores in the dataset. It allows us to see the central tendency, spread, and shape of the data.
