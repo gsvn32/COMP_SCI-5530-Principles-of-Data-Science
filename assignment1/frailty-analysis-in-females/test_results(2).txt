@@ -1,0 +1,25 @@
+
+Descriptive Statistics for Frail (Y) Group:
+ count     4.000000
+mean     51.808570
+std       7.530211
+min      44.092400
+25%      47.399330
+50%      50.706260
+75%      55.115500
+max      61.729360
+Name: Grip strength, dtype: float64
+
+Descriptive Statistics for Non-Frail (N) Group:
+ count     6.000000
+mean     60.994487
+std      10.214475
+min      41.887780
+25%      58.973585
+50%      65.036290
+75%      67.792065
+max      68.343220
+Name: Grip strength, dtype: float64
+T-Statistic: 1.5303334194571003
+P-Value: 0.1644646461051128
+There is no significant difference in grip strength between the frail and non-frail groups.
