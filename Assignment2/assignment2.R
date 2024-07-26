@@ -1,37 +1,36 @@
-### Part a: Random Sample and Comparison
-
 # Load necessary libraries
 library(ggplot2)
 library(readr)
 
 diabetes <- read_csv("E:/workspace/diabetes.csv")
 
+# Part a: Set seed, calculate max, mean glucose
 # Set seed for reproducibility
 set.seed(287)
 
 # Take a random sample of 25 observations
-sample_diabetes <- diabetes[sample(nrow(diabetes), 25), ]
+s_diabetes <- diabetes[sample(nrow(diabetes), 25), ]
 
 # Calculate sample statistics
-sample_mean_glucose <- mean(sample_diabetes$Glucose)
-sample_max_glucose <- max(sample_diabetes$Glucose)
+s_mean_glucose <- mean(s_diabetes$Glucose)
+s_max_glucose <- max(s_diabetes$Glucose)
 
 # Calculate population statistics
-population_mean_glucose <- mean(diabetes$Glucose)
-population_max_glucose <- max(diabetes$Glucose)
+p_mean_glucose <- mean(diabetes$Glucose)
+p_max_glucose <- max(diabetes$Glucose)
 
 # Print statistics
-print(paste("Sample Mean Glucose:", sample_mean_glucose))
-print(paste("Sample Max Glucose:", sample_max_glucose))
-print(paste("Population Mean Glucose:", population_mean_glucose))
-print(paste("Population Max Glucose:", population_max_glucose))
+print(paste("Sample Mean Glucose:", s_mean_glucose))
+print(paste("Sample Max Glucose:", s_max_glucose))
+print(paste("Population Mean Glucose:", p_mean_glucose))
+print(paste("Population Max Glucose:", p_max_glucose))
 
 
-# Create a diabetes frame for plotting
+# Create a diabetes frame for plot
 comparison_df <- data.frame(
   Category = c("Sample", "Population"),
-  Mean_Glucose = c(sample_mean_glucose, population_mean_glucose),
-  Max_Glucose = c(sample_max_glucose, population_max_glucose)
+  Mean_Glucose = c(s_mean_glucose, p_mean_glucose),
+  Max_Glucose = c(s_max_glucose, p_max_glucose)
 )
 
 # Plot mean glucose comparison
@@ -45,21 +44,19 @@ ggplot(comparison_df, aes(x = Category, y = Max_Glucose, fill = Category)) +
   ggtitle("Max Glucose Comparison")
 
 
-### Part b: 98th Percentile of BMI
-
-
+# Part b: 98th Percentile of BMI
 # Calculate the 98th percentile for sample and population
-sample_98th_percentile_BMI <- quantile(sample_diabetes$BMI, 0.98)
-population_98th_percentile_BMI <- quantile(diabetes$BMI, 0.98)
+s_98th_percentile_BMI <- quantile(s_diabetes$BMI, 0.98)
+p_98th_percentile_BMI <- quantile(diabetes$BMI, 0.98)
 
 # Print percentiles
-print(paste("Sample 98th Percentile BMI:", sample_98th_percentile_BMI))
-print(paste("Population 98th Percentile BMI:", population_98th_percentile_BMI))
+print(paste("Sample 98th Percentile BMI:", s_98th_percentile_BMI))
+print(paste("Population 98th Percentile BMI:", p_98th_percentile_BMI))
 
 # Create a diabetes frame for plotting
 percentile_comparison_df <- data.frame(
   Category = c("Sample", "Population"),
-  Percentile_98_BMI = c(sample_98th_percentile_BMI, population_98th_percentile_BMI)
+  Percentile_98_BMI = c(s_98th_percentile_BMI, p_98th_percentile_BMI)
 )
 
 # Plot 98th percentile BMI comparison
@@ -68,65 +65,63 @@ ggplot(percentile_comparison_df, aes(x = Category, y = Percentile_98_BMI, fill =
   ggtitle("98th Percentile BMI Comparison")
 
 
-### Part c: Bootstrap Sampling
-
-
+# Part c: Bootstrap Sampling
 # Number of bootstrap samples and sample size
 num_samples <- 500
 sample_size <- 150
 
 # Initialize vectors to store bootstrap results
-bootstrap_means <- numeric(num_samples)
-bootstrap_sds <- numeric(num_samples)
-bootstrap_percentiles <- numeric(num_samples)
+b_means <- numeric(num_samples)
+b_sds <- numeric(num_samples)
+b_percentiles <- numeric(num_samples)
 
 # Perform bootstrap sampling
 for (i in 1:num_samples) {
-  bootstrap_sample <- diabetes[sample(nrow(diabetes), sample_size, replace = TRUE), ]
-  bootstrap_means[i] <- mean(bootstrap_sample$BloodPressure)
-  bootstrap_sds[i] <- sd(bootstrap_sample$BloodPressure)
-  bootstrap_percentiles[i] <- quantile(bootstrap_sample$BloodPressure, 0.98)
+  b_sample <- diabetes[sample(nrow(diabetes), sample_size, replace = TRUE), ]
+  b_means[i] <- mean(b_sample$BloodPressure)
+  b_sds[i] <- sd(b_sample$BloodPressure)
+  b_percentiles[i] <- quantile(b_sample$BloodPressure, 0.98)
 }
 
 # Calculate population statistics
-population_mean_BP <- mean(diabetes$BloodPressure)
-population_sd_BP <- sd(diabetes$BloodPressure)
-population_percentile_BP <- quantile(diabetes$BloodPressure, 0.98)
+p_mean_BP <- mean(diabetes$BloodPressure)
+p_sd_BP <- sd(diabetes$BloodPressure)
+p_percentile_BP <- quantile(diabetes$BloodPressure, 0.98)
 
 # Calculate average bootstrap statistics
-bootstrap_mean_BP <- mean(bootstrap_means)
-bootstrap_sd_BP <- mean(bootstrap_sds)
-bootstrap_percentile_BP <- mean(bootstrap_percentiles)
+b_mean_BP <- mean(b_means)
+b_sd_BP <- mean(b_sds)
+b_percentile_BP <- mean(b_percentiles)
 
 # Print statistics
-print(paste("Population Mean BloodPressure:", population_mean_BP))
-print(paste("Bootstrap Mean BloodPressure:", bootstrap_mean_BP))
-print(paste("Population SD BloodPressure:", population_sd_BP))
-print(paste("Bootstrap SD BloodPressure:", bootstrap_sd_BP))
-print(paste("Population 98th Percentile BloodPressure:", population_percentile_BP))
-print(paste("Bootstrap 98th Percentile BloodPressure:", bootstrap_percentile_BP))
+print(paste("Population Mean BloodPressure:", p_mean_BP))
+print(paste("Bootstrap Mean BloodPressure:", b_mean_BP))
+print(paste("Population SD BloodPressure:", p_sd_BP))
+print(paste("Bootstrap SD BloodPressure:", b_sd_BP))
+print(paste("Population 98th Percentile BloodPressure:", p_percentile_BP))
+print(paste("Bootstrap 98th Percentile BloodPressure:", b_percentile_BP))
 
 
 # Create a diabetes frame for plotting
-bootstrap_comparison_df <- data.frame(
+b_comparison_df <- data.frame(
   Category = c("Population", "Bootstrap"),
-  Mean_BP = c(population_mean_BP, bootstrap_mean_BP),
-  SD_BP = c(population_sd_BP, bootstrap_sd_BP),
-  Percentile_98_BP = c(population_percentile_BP, bootstrap_percentile_BP)
+  Mean_BP = c(p_mean_BP, b_mean_BP),
+  SD_BP = c(p_sd_BP, b_sd_BP),
+  Percentile_98_BP = c(p_percentile_BP, b_percentile_BP)
 )
 
 # Plot mean blood pressure comparison
-ggplot(bootstrap_comparison_df, aes(x = Category, y = Mean_BP, fill = Category)) +
+ggplot(b_comparison_df, aes(x = Category, y = Mean_BP, fill = Category)) +
   geom_bar(stat = "identity") +
   ggtitle("Mean Blood Pressure Comparison")
 
 # Plot standard deviation blood pressure comparison
-ggplot(bootstrap_comparison_df, aes(x = Category, y = SD_BP, fill = Category)) +
+ggplot(b_comparison_df, aes(x = Category, y = SD_BP, fill = Category)) +
   geom_bar(stat = "identity") +
   ggtitle("SD Blood Pressure Comparison")
 
 # Plot 98th percentile blood pressure comparison
-ggplot(bootstrap_comparison_df, aes(x = Category, y = Percentile_98_BP, fill = Category)) +
+ggplot(b_comparison_df, aes(x = Category, y = Percentile_98_BP, fill = Category)) +
   geom_bar(stat = "identity") +
   ggtitle("98th Percentile Blood Pressure Comparison")
 
