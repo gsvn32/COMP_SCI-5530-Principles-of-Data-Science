@@ -53,7 +53,7 @@ p_98th_percentile_BMI <- quantile(diabetes$BMI, 0.98)
 print(paste("Sample 98th Percentile BMI:", s_98th_percentile_BMI))
 print(paste("Population 98th Percentile BMI:", p_98th_percentile_BMI))
 
-# Create a diabetes frame for plotting
+# Create a diabetes frame for plot
 percentile_comparison_df <- data.frame(
   Category = c("Sample", "Population"),
   Percentile_98_BMI = c(s_98th_percentile_BMI, p_98th_percentile_BMI)
@@ -102,7 +102,7 @@ print(paste("Population 98th Percentile BloodPressure:", p_percentile_BP))
 print(paste("Bootstrap 98th Percentile BloodPressure:", b_percentile_BP))
 
 
-# Create a diabetes frame for plotting
+# Create a diabetes frame for plot
 b_comparison_df <- data.frame(
   Category = c("Population", "Bootstrap"),
   Mean_BP = c(p_mean_BP, b_mean_BP),
